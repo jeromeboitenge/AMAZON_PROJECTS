@@ -1,4 +1,4 @@
-import { cart } from '../data/cart.js';
+import { cart,removeFromCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { currencyformat } from './utils/money.js';
 let cartSummary ='';
@@ -33,7 +33,7 @@ if(productId === product.id){
           <span class="update-quantity-link link-primary">
             Update
           </span>
-          <span class="delete-quantity-link link-primary js-delete-link" data-product-id = ${matchingProduct.id}>
+         <span class="delete-quantity-link link-primary js-delete-link" data-product-id ="${matchingProduct.id}" >
             Delete
           </span>
         </div>
@@ -90,8 +90,9 @@ if(productId === product.id){
 document.querySelector('.summarize-the-cart').innerHTML = cartSummary;
 document.querySelectorAll('.js-delete-link').forEach((link)=>{
   link.addEventListener('click', () => {
-  const productee = link.dataset.priductId;
-    console.log(productee);
+  const productId = link.dataset.productId;
+  removeFromCart(productId);
+    console.log(cart);
   });
   
 });
