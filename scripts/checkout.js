@@ -1,5 +1,6 @@
 import { cart } from '../data/cart.js';
 import { products } from '../data/products.js';
+import { currencyformat } from './utils/money.js';
 let cartSummary ='';
 cart.forEach((cartItem)=>{
     let productId = cartItem.productId;
@@ -23,7 +24,7 @@ if(productId === product.id){
          ${matchingProduct.name}
         </div>
         <div class="product-price">
-        ${(matchingProduct.priceCents/100).toFixed(2)}
+        ${currencyformat(matchingProduct.priceCents)}
         </div>
         <div class="product-quantity">
           <span>
@@ -32,7 +33,7 @@ if(productId === product.id){
           <span class="update-quantity-link link-primary">
             Update
           </span>
-          <span class="delete-quantity-link link-primary">
+          <span class="delete-quantity-link link-primary js-delete-link" data-product-id = ${matchingProduct.id}>
             Delete
           </span>
         </div>
@@ -45,7 +46,7 @@ if(productId === product.id){
         <div class="delivery-option">
           <input type="radio" checked
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               Tuesday, June 21
@@ -58,7 +59,7 @@ if(productId === product.id){
         <div class="delivery-option">
           <input type="radio"
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               Wednesday, June 15
@@ -71,7 +72,7 @@ if(productId === product.id){
         <div class="delivery-option">
           <input type="radio"
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${matchingProduct.id}">
           <div>
             <div class="delivery-option-date">
               Monday, June 13
@@ -87,4 +88,10 @@ if(productId === product.id){
 
 });
 document.querySelector('.summarize-the-cart').innerHTML = cartSummary;
-console.log(cartSummary);
+document.querySelectorAll('.js-delete-link').forEach((link)=>{
+  link.addEventListener('click', () => {
+  const productee = link.dataset.priductId;
+    console.log(productee);
+  });
+  
+});
